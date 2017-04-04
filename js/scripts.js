@@ -19,11 +19,14 @@ $(document).ready(function() {
     event.preventDefault();
 
     $("#withdrawalOrDepositAmount").submit(function(event) {
-      var depositAmount = 0;
-      var withdrawalAmount = 0;
-      var depositAmount = parseFloat($("#deposit-amount").val());
-      var withdrawalAmount = -Math.abs(parseFloat($("#withdrawal").val()));
-      var depositOrWithdrawAmount = depositAmount + withdrawalAmount;
+      var inputtedDepositAmount = parseFloat($("#deposit-amount").val());
+      var inputtedWithdrawalAmount = -Math.abs(parseFloat($("#withdrawal").val()));
+      if (isNaN(inputtedDepositAmount)) {
+        inputtedDepositAmount = 0;
+      } else if (isNaN(inputtedWithdrawalAmount)) {
+        inputtedWithdrawalAmount =0;
+      }
+      var depositOrWithdrawAmount = inputtedDepositAmount + inputtedWithdrawalAmount;
 
       newBankAccount.depositOrWithdrawFunds(depositOrWithdrawAmount);
       $(".currentBalance").last().text(newBankAccount.currentBalance);
